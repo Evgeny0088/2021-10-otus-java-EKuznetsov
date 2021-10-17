@@ -1,10 +1,11 @@
 package ru.otus;
 
 import java.util.LinkedHashSet;
+import java.util.Optional;
 
 public class CustomerReverseOrder {
 
-    private LinkedHashSet<Customer> customers;
+    private final LinkedHashSet<Customer> customers;
 
     public CustomerReverseOrder(){
         this.customers = new LinkedHashSet<>();
@@ -15,15 +16,15 @@ public class CustomerReverseOrder {
     }
 
     public Customer take() {
-        Customer last;
-        // in case if collection is empty from the beginning
+        Optional<Customer> last;
         try {
-            last = customers.stream().skip(customers.size()-1).findFirst().get();
+            last = customers.stream().skip(customers.size()-1).findFirst();
         }catch (IllegalArgumentException e){
-            System.out.println("no more elements in collection, therefore new generated element is returned!");
-            return new Customer(0,"defualt name", 0);
+            // in case if collection is empty from the beginning
+            System.out.println("no more elements in collection, new generated element is returned!");
+            return new Customer(0,"default name", 0);
         }
-        customers.remove(last);
-        return last;
+        last.ifPresent(customers::remove);
+        return last.orElseGet(() -> new Customer(0, "default customer", 0));
     }
 }
