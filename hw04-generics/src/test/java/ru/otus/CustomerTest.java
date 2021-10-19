@@ -12,6 +12,21 @@ class CustomerTest {
     // Все тесты должны проходить, менять тесты не надо.
 
     @Test
+    @DisplayName("Проверяем, что класс Customer не сломан")
+    void setterCustomerTest() {
+        //given
+        String expectedName = "updatedName";
+        String name = "nameVas";
+        Customer customer = new Customer(1, name, 2);
+
+        //when
+        customer.setName(expectedName);
+
+        //then
+        assertThat(customer.getName()).isEqualTo(expectedName);
+    }
+
+    @Test
     @DisplayName("Объект Customer как ключ в карте")
     void customerAsKeyTest() {
         //given
@@ -40,7 +55,7 @@ class CustomerTest {
 
     @Test
     @DisplayName("Сортировка по полю score, итерация по возрастанию")
-    void scoreSortingTest() {
+    void scoreSortingTest() throws CloneNotSupportedException {
         //given
         Customer customer1 = new Customer(1, "Ivan", 233);
         Customer customer2 = new Customer(2, "Petr", 11);
@@ -78,12 +93,11 @@ class CustomerTest {
 
     @Test
     @DisplayName("Модификация коллекции")
-    void mutationTest() {
+    void mutationTest() throws CloneNotSupportedException {
         //given
         Customer customer1 = new Customer(1, "Ivan", 233);
         Customer customer2 = new Customer(2, "Petr", 11);
         Customer customer3 = new Customer(3, "Pavel", 888);
-
         CustomerService customerService = new CustomerService();
         customerService.add(customer1, "Data1");
         customerService.add(new Customer(customer2.getId(), customer2.getName(), customer2.getScores()), "Data2");

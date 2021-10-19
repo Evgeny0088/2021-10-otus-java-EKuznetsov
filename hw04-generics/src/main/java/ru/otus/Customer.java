@@ -2,10 +2,10 @@ package ru.otus;
 
 import java.util.Objects;
 
-public class Customer implements Comparable<Customer>{
+public class Customer implements Cloneable{
     private final Long id;
-    private final String name;
-    private final Long scores;
+    private String name;
+    private Long scores;
 
     public Customer(long id, String name, long scores) {
         this.id = id;
@@ -21,13 +21,11 @@ public class Customer implements Comparable<Customer>{
         return name;
     }
 
-    public void setName(String name) {}
+    public void setName(String name) {this.name = name;}
 
-    public long getScores() {
-        return scores;
-    }
+    public long getScores() {return scores;}
 
-    public void setScores(long scores) {}
+    public void setScores(long scores) {this.scores = scores;}
 
     @Override
     public String toString() {
@@ -52,7 +50,7 @@ public class Customer implements Comparable<Customer>{
     }
 
     @Override
-    public int compareTo(Customer customer) {
-        return Long.compare(this.getScores(), customer.getScores());
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }
