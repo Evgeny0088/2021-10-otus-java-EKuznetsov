@@ -2,7 +2,7 @@ package ru.otus;
 
 import java.util.Objects;
 
-public class Customer implements Cloneable{
+public class Customer implements Comparable<Customer> {
     private final Long id;
     private String name;
     private Long scores;
@@ -50,7 +50,7 @@ public class Customer implements Cloneable{
     }
 
     @Override
-    protected Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    public int compareTo(Customer customer) {
+        return Long.compare(this.getScores(),customer.getScores());
     }
 }
