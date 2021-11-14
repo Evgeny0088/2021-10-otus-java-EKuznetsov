@@ -1,6 +1,5 @@
 package ru.otus.calculatorOptimized;
 
-
 /*
 -Xms256m
 -Xmx256m
