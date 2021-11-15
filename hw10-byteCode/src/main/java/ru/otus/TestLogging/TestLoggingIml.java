@@ -21,6 +21,12 @@ public class TestLoggingIml implements TestLogging {
 
     @Log
     @Override
+    public void stringCalculation(String str){
+        System.out.println("method is called!");
+    }
+
+    @Log
+    @Override
     public void calculation(int param1, int param2, String param3) {
         System.out.println("method is called!");
     }
