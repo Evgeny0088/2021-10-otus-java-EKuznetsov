@@ -2,18 +2,18 @@ package ru.otus.utils;
 
 public class AnnotatedMethod {
     private final String name;
-    private final int argsCount;
+    private final Class<?>[] parameterTypes;
 
-    public AnnotatedMethod(String name, int argsCount) {
+    public AnnotatedMethod(String name, Class<?>[] parameterTypes) {
         this.name = name;
-        this.argsCount = argsCount;
+        this.parameterTypes = parameterTypes;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getArgsCount() {
-        return argsCount;
+    public Class<?>[] getParameterTypes() {
+        return parameterTypes;
     }
 }
