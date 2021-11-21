@@ -8,13 +8,13 @@ public class TestLoggingIml implements TestLogging {
     public TestLoggingIml() {
     }
 
-//    @Log
+    @Log
     @Override
     public void calculation(int param) {
         System.out.println("method is called!");
     }
 
-//    @Log
+    @Log
     @Override
     public void calculation(int param1, int param2) {
         System.out.println("method is called!");
@@ -104,7 +104,7 @@ public class TestLoggingIml implements TestLogging {
 
     }
 
-//    @Log
+    @Log
     @Override
     public void emptyCalculation() {
         System.out.println("method is called!");
