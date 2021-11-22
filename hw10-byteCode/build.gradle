@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow'
+}
+
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+group 'ru.otus'
+version '0.1'
+
+repositories {
+    mavenCentral()
+}
+
+task shadowTestLogging(type: Jar, dependsOn: shadowJar) {
+    archiveBaseName.set('hw10-byteCode')
+    archiveVersion.set('0.1')
+    manifest {
+        attributes 'Main-Class': 'ru.otus.TestLoggingRunner'
+    }
+    from zipTree(shadowJar.archiveFile)
+}
+
+tasks.build.dependsOn tasks.shadowTestLogging
+
