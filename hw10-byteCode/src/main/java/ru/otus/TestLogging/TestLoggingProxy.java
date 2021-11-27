@@ -26,7 +26,6 @@ public class TestLoggingProxy {
 
         public TestLoggingHandler(TestLogging testLogging){
             this.testLogging = testLogging;
-            System.out.println(testLogging.getClass());
             this.annotatedMethods = annotatedMethodList();
         }
 
