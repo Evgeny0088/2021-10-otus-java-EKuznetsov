@@ -3,7 +3,7 @@ package ru.otus.Container;
 public class CellBuilder {
     public static CellImpl cellLoader(CellUnit cellUnit){
         CellImpl cell = new CellImpl(cellUnit);
-        for (int i=0; i<10;i++){
+        for (int i=0; i<3;i++){
             cell.addMoneyToCell(cellUnit);
         }
         return cell;

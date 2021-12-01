@@ -1,6 +1,6 @@
 package ru.otus.Utils;
 
-import ru.otus.BankomatImpl.BankomatServerImpl;
+import ru.otus.BankomatImpl.BankomatHandlerImpl;
 import ru.otus.Container.CellUnit;
 import ru.otus.Container.ContainerImpl;
 import ru.otus.Container.CurrencySlotImpl;
@@ -17,7 +17,7 @@ public class BankonatHelperFunctions {
     /*
     provides general info about bankomat and client status
      */
-    public static boolean bankomatGreetingInfo(BankomatServerImpl bankomatServer){
+    public static boolean bankomatGreetingInfo(BankomatHandlerImpl bankomatServer){
         String delimiter = "\n";
         boolean cardIsActive = bankomatServer.getClient().isAccountIsActive();
         String greeting = "Welcome to Bankomat!" + delimiter +
@@ -81,12 +81,12 @@ public class BankonatHelperFunctions {
     /*
     gets bankomat methods available in BankomatServerImpl class, annotated by Handler
      */
-    public static Map<Method, Integer> getBankomatServerOptions(Class<?> serverClass){
+    public static Map<Method, Integer> getBankomatServerOptions(Class<?> processorClass){
         String delimiter = "\n";
         String showServerOptions="";
         Map<Method, Integer> options = new HashMap<>();
         int i = 1;
-        for (Method m: serverClass.getDeclaredMethods()){
+        for (Method m: processorClass.getDeclaredMethods()){
             if (m.isAnnotationPresent(Handler.class)){
                 options.put(m,i++);
             }

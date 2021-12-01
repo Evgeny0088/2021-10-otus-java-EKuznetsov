@@ -4,7 +4,7 @@ import ru.otus.Client.ClientImpl;
 import ru.otus.Container.CellImpl;
 import ru.otus.Container.CellUnit;
 import ru.otus.Container.CurrencySlotImpl;
-import ru.otus.interfaces.BankomatServer;
+import ru.otus.interfaces.BankomatHandler;
 import ru.otus.interfaces.Handler;
 
 import java.util.Scanner;
@@ -12,14 +12,14 @@ import java.util.logging.Logger;
 
 import static ru.otus.Utils.BankonatHelperFunctions.*;
 
-public class BankomatServerImpl implements BankomatServer {
+public class BankomatHandlerImpl implements BankomatHandler {
 
-    private static final Logger log = Logger.getLogger(BankomatServerImpl.class.getName());
+    private static final Logger log = Logger.getLogger(BankomatHandlerImpl.class.getName());
 
     private final BankomatImpl bankomat;
     private final ClientImpl client;
 
-    public BankomatServerImpl(BankomatImpl bankomat, ClientImpl client) {
+    public BankomatHandlerImpl(BankomatImpl bankomat, ClientImpl client) {
         this.bankomat = bankomat;
         this.client = client;
     }
