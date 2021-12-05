@@ -4,14 +4,12 @@ import ru.otus.interfaces.Cell;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Logger;
 
 /*
 Storage cell for specific bill value (50, 100 or 500)
  */
 public class CellImpl implements Cell{
 
-    private static final Logger log = Logger.getLogger(CellImpl.class.getName());
     private final String billNominalName;
     private final int billNominalValue;
     private List<CellUnit> billsInCell;
@@ -55,7 +53,7 @@ public class CellImpl implements Cell{
         if (bill.getNominal() == billNominalValue){
             billsInCell.add(bill);
         }else {
-            log.warning("bill has different nominal, refused to insert!");
+            System.out.println("bill has different nominal, refused to insert!");
         }
     }
 
@@ -79,7 +77,6 @@ public class CellImpl implements Cell{
     public int hashCode() {
         return Objects.hash(billNominalValue);
     }
-
 
     @Override
     public int compareTo(CellImpl cell) {

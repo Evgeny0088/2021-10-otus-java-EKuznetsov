@@ -1,11 +1,14 @@
 package ru.otus.interfaces;
 
+import ru.otus.Container.CellImpl;
 import ru.otus.Container.CellUnit;
 
 import java.util.Map;
 
 public interface Bankomat {
-
-    void addMoney(String currency, CellUnit bill);
-    Map<String, Integer> moneyWithdrawal(String currency, int amount);
+    void addMoney(int amount);
+    Map<String, Integer> moneyWithdrawal(int amount);
+    void addCell(CellImpl cell);
+    int getMoneyInBankomat();
+    CellImpl getCellByName(CellUnit cellName);
 }

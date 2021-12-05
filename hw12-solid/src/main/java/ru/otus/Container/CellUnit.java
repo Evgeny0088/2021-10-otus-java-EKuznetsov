@@ -1,7 +1,7 @@
 package ru.otus.Container;
 
 /*
-bill unit for bankomat, it can be any currency type
+bill unit for bankomat
  */
 public enum CellUnit {
 
