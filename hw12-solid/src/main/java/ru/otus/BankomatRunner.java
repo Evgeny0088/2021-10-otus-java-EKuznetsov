@@ -9,9 +9,9 @@ public class BankomatRunner {
         BankomatImpl bankomat = new BankomatImpl("tinkoff");
 
         // load bankomat with new cells and nominals
-        bankomat.addCell(CellBuilder.cellBuilder(CellUnit.Bill50));
-        bankomat.addCell(CellBuilder.cellBuilder(CellUnit.Bill100));
-        bankomat.addCell(CellBuilder.cellBuilder(CellUnit.Bill500));
+        bankomat.getContainer().addCell(CellBuilder.cellBuilder(CellUnit.Bill50, 3));
+        bankomat.getContainer().addCell(CellBuilder.cellBuilder(CellUnit.Bill100,3));
+        bankomat.getContainer().addCell(CellBuilder.cellBuilder(CellUnit.Bill500,3));
 
         System.out.printf("\n###  bankomat is created, current balance: %d  ###\n\n", bankomat.getMoneyInBankomat());
 

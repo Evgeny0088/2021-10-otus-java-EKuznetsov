@@ -1,5 +1,4 @@
 package ru.otus.Container;
-import ru.otus.interfaces.Cell;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +7,7 @@ import java.util.Objects;
 /*
 Storage cell for specific bill value (50, 100 or 500)
  */
-public class CellImpl implements Cell{
+public class CellImpl implements Comparable<CellImpl>{
 
     private final String billNominalName;
     private final int billNominalValue;
@@ -39,7 +38,6 @@ public class CellImpl implements Cell{
     /*
     gets how much money in cell
      */
-    @Override
     public int getMoneyInCell() {
         return billsInCell.stream().map(CellUnit::getNominal).reduce(0,Integer::sum);
     }
@@ -48,7 +46,6 @@ public class CellImpl implements Cell{
     adding new bill in cell. Before accept bill to be checked if it is proper nominal value
     if not, then it should be refused
      */
-    @Override
     public void addMoneyToCell(CellUnit bill){
         if (bill.getNominal() == billNominalValue){
             billsInCell.add(bill);
@@ -60,7 +57,6 @@ public class CellImpl implements Cell{
     /*
     checks if cell is empty (not any bills inside)
      */
-    @Override
     public boolean isEmptyCell() {
         return billsInCell.isEmpty();
     }
@@ -82,4 +78,5 @@ public class CellImpl implements Cell{
     public int compareTo(CellImpl cell) {
         return Integer.compare(this.billNominalValue,cell.billNominalValue);
     }
+
 }
