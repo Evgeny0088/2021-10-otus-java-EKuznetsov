@@ -27,7 +27,7 @@ public class HomeWork {
      */
 
     public static void main(String[] args) {
-        var processors = List.of(new ProcessorThrowsExceptionEveryTwoSecond(LocalDateTime.now()),
+        var processors = List.of(new ProcessorThrowsExceptionEveryTwoSecond(LocalDateTime::now),
                 new LoggerProcessor(new ProcessorFieldExchanger()));
         var complexProcessor = new ComplexProcessor(processors, ex -> {});
         var listenerPrinter = new ListenerPrinterConsole();

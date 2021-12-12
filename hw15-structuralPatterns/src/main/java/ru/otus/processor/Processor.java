@@ -6,7 +6,6 @@ public interface Processor {
 
     Message process(Message message) throws RuntimeException;
 
-
     //todo: 2. Сделать процессор, который поменяет местами значения field11 и field12
 
     //todo: 3. Сделать процессор, который будет выбрасывать исключение в четную секунду (сделайте тест с гарантированным результатом)
