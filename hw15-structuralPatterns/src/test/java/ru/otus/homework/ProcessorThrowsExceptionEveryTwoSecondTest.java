@@ -3,7 +3,7 @@ package ru.otus.homework;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import ru.otus.model.Message;
-import ru.otus.processor.homework.ErrorTimeProvider;
+import ru.otus.processor.homework.TimeProvider;
 import ru.otus.processor.homework.ProcessorThrowsExceptionEveryTwoSecond;
 import java.time.LocalDateTime;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -15,7 +15,7 @@ public class ProcessorThrowsExceptionEveryTwoSecondTest {
     void errorCallTest(){
         //given
         var message = new Message.Builder(1L).field8("field8").build();
-        ErrorTimeProvider errorTime = () -> LocalDateTime.of(2021,12,10,10,10,2);
+        TimeProvider errorTime = () -> LocalDateTime.of(2021,12,10,10,10,2);
         var processor = new ProcessorThrowsExceptionEveryTwoSecond(errorTime);
         long errorMessage = errorTime.getTime().getSecond();
         //then

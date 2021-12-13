@@ -15,28 +15,18 @@ public class HistoryListener implements Listener, HistoryReader {
 
     @Override
     public void onUpdated(Message msg) {
-        try{
-            if (messageHistory.get(msg.getId())==null){
-                Message messageToAchieve = msg.clone();
-                messageHistory.put(messageToAchieve.getId(), messageToAchieve);
-                System.out.println("message successfully added!");
-            }else {
-                System.out.printf("message with id %d already exists in archive!%n", msg.getId());
-            }
-        }catch (UnsupportedOperationException exception){
-            throw new UnsupportedOperationException();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
+        if (messageHistory.get(msg.getId())==null){
+            Message messageToAchieve = msg.clone();
+            messageHistory.put(messageToAchieve.getId(), messageToAchieve);
+            System.out.println("message successfully added!");
+        }else {
+            System.out.printf("message with id %d already exists in archive!%n", msg.getId());
         }
     }
 
     @Override
     public Optional<Message> findMessageById(long id) {
-        try {
-            return Optional.of(messageHistory.get(id));
-        }catch (UnsupportedOperationException exception){
-            throw new UnsupportedOperationException();
-        }
+        return Optional.of(messageHistory.get(id));
     }
 
     public void printArchiveMessages(){

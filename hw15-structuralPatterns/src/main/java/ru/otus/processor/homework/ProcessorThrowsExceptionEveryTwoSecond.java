@@ -6,9 +6,9 @@ import ru.otus.processor.Processor;
 
 public class ProcessorThrowsExceptionEveryTwoSecond implements Processor{
 
-    private final ErrorTimeProvider errorTime;
+    private final TimeProvider errorTime;
 
-    public ProcessorThrowsExceptionEveryTwoSecond(ErrorTimeProvider currentRunTimeSecond) {
+    public ProcessorThrowsExceptionEveryTwoSecond(TimeProvider currentRunTimeSecond) {
         this.errorTime = currentRunTimeSecond;
     }
 
