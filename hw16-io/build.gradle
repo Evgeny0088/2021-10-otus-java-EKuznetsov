@@ -1,11 +1,20 @@
 plugins {
     id 'java'
+    id 'com.github.johnrengelman.shadow'
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
 targetCompatibility = JavaVersion.VERSION_17
 
+group 'ru.otus'
+version 'unspecified'
+
+repositories {
+    mavenCentral()
+}
+
 dependencies {
+    implementation 'com.fasterxml:jackson-xml-databind:0.6.2'
     implementation 'org.junit.jupiter:junit-jupiter:5.8.2'
     implementation 'junit:junit:4.13.1'
     implementation 'com.fasterxml:jackson-xml-databind:0.6.2'
@@ -15,6 +24,15 @@ dependencies {
     testImplementation ('org.assertj:assertj-core:3.21.0')
     testImplementation ('org.mockito:mockito-core:4.1.0')
     testImplementation ('org.mockito:mockito-junit-jupiter:4.1.0')
+}
+
+task shadowJsonProcessRunner(type: Jar, dependsOn: shadowJar) {
+    archiveBaseName.set('hw16-io')
+    archiveVersion.set('0.1')
+    manifest {
+        attributes 'Main-Class': 'ru.otus.JsonProcessRunner'
+    }
+    from zipTree(shadowJar.archiveFile)
 }
 
 test {
@@ -29,3 +47,4 @@ tasks.withType(JavaCompile) {
         encoding = 'UTF-8'
     }
 }
+tasks.build.dependsOn tasks.shadowJsonProcessRunner
