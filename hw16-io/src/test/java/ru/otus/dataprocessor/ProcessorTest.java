@@ -25,9 +25,8 @@ class ProcessorTest {
         //given
         var inputDataFileName = "inputData.json";
         var outputDataFileName = "outputData.json";
-        Path inputFilePath = Paths.get("src","test","resources",inputDataFileName); // добавил путь к папке resources если так можно было
         var fullOutputFilePath = String.format("%s%s%s",tempDir, File.separator, outputDataFileName);
-        var loader = new ResourcesFileLoader(inputFilePath.toString());
+        var loader = new ResourcesFileLoader(inputDataFileName);
         var processor = new ProcessorAggregator();
         var serializer = new FileSerializer(fullOutputFilePath);
 

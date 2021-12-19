@@ -12,9 +12,8 @@ import java.util.Map;
 public class JsonProcessRunner {
     public static void main(String[] args) throws IOException {
 
-        var inputFileName = "hw16-io/src/main/resources/inputData.json";
-        var outputDataFileName = "hw16-io/src/main/resources/outputData.json";
-
+        var inputFileName = "inputData.json";
+        var outputDataFileName = "outputData.json";
         var resources = new ResourcesFileLoader(inputFileName);
         var processor = new ProcessorAggregator();
         Map<String, Double> processed = processor.process(resources.load());
