@@ -1,0 +1,13 @@
+[2021-11-13T10:42:44.637+0300][0.022s][info][gc] Using G1
+[2021-11-13T10:42:44.637+0300][0.022s][debug][gc] ConcGCThreads: 2 offset 16
+[2021-11-13T10:42:44.637+0300][0.022s][debug][gc] ParallelGCThreads: 8
+[2021-11-13T10:42:44.637+0300][0.023s][debug][gc] Initialize mark stack with 4096 chunks, maximum 524288
+[2021-11-13T10:42:44.900+0300][0,286s][info ][gc] GC(0) Pause Young (Concurrent Start) (G1 Humongous Allocation) 54M->51M(150M) 95,382ms
+[2021-11-13T10:42:44.901+0300][0,286s][info ][gc] GC(1) Concurrent Undo Cycle
+[2021-11-13T10:42:44.906+0300][0,292s][info ][gc] GC(1) Concurrent Undo Cycle 5,966ms
+[2021-11-13T10:42:45.050+0300][0,436s][info ][gc] GC(2) Pause Young (Concurrent Start) (G1 Humongous Allocation) 75M->75M(150M) 100,874ms
+[2021-11-13T10:42:45.050+0300][0,436s][info ][gc] GC(3) Concurrent Mark Cycle
+[2021-11-13T10:42:45.063+0300][0,448s][debug][gc] GC(3) Reclaimed 50 empty regions
+[2021-11-13T10:42:45.063+0300][0,448s][info ][gc] GC(3) Pause Remark 111M->61M(150M) 0,340ms
+[2021-11-13T10:42:45.102+0300][0,487s][info ][gc] GC(3) Pause Cleanup 61M->61M(150M) 0,026ms
+[2021-11-13T10:42:45.102+0300][0,488s][info ][gc] GC(3) Concurrent Mark Cycle 52,051ms
