@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+}
+
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+dependencies {
+    dependencies {
+        implementation project(':hw18-jdbc:demo')
+
+        implementation 'org.slf4j:slf4j-api:1.7.32'
+        implementation 'ch.qos.logback:logback-classic:1.2.10'
+        implementation 'org.flywaydb:flyway-core:8.3.0'
+        implementation 'org.postgresql:postgresql:42.3.1'
+
+    }
+}
+
+test {
+}
