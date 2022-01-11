@@ -1,0 +1,28 @@
+
+2021-10-31 Time: 14:30:03
+Results for 256m heap memory of CalcDemoOptimized class:
+spend msec:1686, sec:1
+2021-10-31 Time: 14:30:46
+Results for 150m heap memory of CalcDemoOptimized class:
+spend msec:1907, sec:1
+2021-10-31 Time: 14:35:30
+Results for 150m heap memory of CalcDemoOptimized class:
+spend msec:1843, sec:1
+2021-10-31 Time: 14:35:36
+Results for 150m heap memory of CalcDemoOptimized class:
+spend msec:1901, sec:1
+2021-10-31 Time: 14:35:39
+Results for 150m heap memory of CalcDemoOptimized class:
+spend msec:1829, sec:1
+2021-11-01 Time: 19:47:35
+Results for 150m heap memory of CalcDemoOptimized class:
+spend msec:1947, sec:1
+2021-11-01 Time: 19:49:21
+Results for 150m heap memory of CalcDemoOptimized class:
+spend msec:1983, sec:1
+2021-11-13 Time: 10:42:37
+Results for 150m heap memory of CalcDemoOptimized class:
+spend msec:2004, sec:2
+2021-11-13 Time: 10:42:46
+Results for 150m heap memory of CalcDemoOptimized class:
+spend msec:2019, sec:2
