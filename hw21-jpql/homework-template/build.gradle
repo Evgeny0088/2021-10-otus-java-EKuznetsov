@@ -1,0 +1,53 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow'
+}
+
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+dependencies {
+    implementation ("ch.qos.logback:logback-classic:1.2.10")
+    implementation ("org.hibernate:hibernate-core:5.4.32.Final")
+    implementation ('org.jboss.logging:jboss-logging:3.4.2.Final')
+    implementation ('org.slf4j:slf4j-api:1.7.32')
+    implementation ('net.bytebuddy:byte-buddy:1.12.3')
+    implementation('org.flywaydb:flyway-core:8.3.0')
+    implementation("org.postgresql:postgresql:42.3.1")
+
+    testImplementation ('com.h2database:h2:2.0.206')
+    testImplementation ('org.junit.jupiter:junit-jupiter-api:5.8.2')
+    testImplementation ('org.junit.jupiter:junit-jupiter-engine:5.8.2')
+    testImplementation ('org.junit.jupiter:junit-jupiter-params:5.8.2')
+    testImplementation ('org.assertj:assertj-core:3.21.0')
+    testImplementation ('org.mockito:mockito-core:4.1.0')
+    testImplementation ('org.mockito:mockito-junit-jupiter:4.1.0')
+    testImplementation ('org.testcontainers:testcontainers:1.16.2')
+    testImplementation ('org.testcontainers:junit-jupiter:1.16.2')
+    testImplementation ('org.testcontainers:postgresql:1.15.3')
+}
+
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+task shadowJsonGpqlDemo(type: Jar, dependsOn: shadowJar) {
+    archiveBaseName.set('hw21-jpql')
+    archiveVersion.set('0.1')
+    manifest {
+        attributes 'Main-Class': 'ru.otus.demo.DbServiceDemo'
+    }
+    from zipTree(shadowJar.archiveFile)
+}
+
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.with {
+        encoding = 'UTF-8'
+    }
+}
+tasks.build.dependsOn tasks.shadowJsonGpqlDemo
