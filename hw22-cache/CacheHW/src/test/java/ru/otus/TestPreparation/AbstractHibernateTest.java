@@ -1,12 +1,12 @@
-package ru.otus.base;
+package ru.otus.TestPreparation;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.stat.EntityStatistics;
-import org.hibernate.stat.Statistics;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import ru.otus.cachehw.DbServiceClientWithCacheImpl;
+import ru.otus.cachehw.MyCache;
 import ru.otus.core.repository.DataTemplateHibernate;
 import ru.otus.core.repository.HibernateUtils;
 import ru.otus.core.sessionmanager.TransactionManagerHibernate;
@@ -15,7 +15,6 @@ import ru.otus.crm.model.Address;
 import ru.otus.crm.model.Client;
 import ru.otus.crm.model.Phone;
 import ru.otus.crm.service.DBServiceClient;
-import ru.otus.crm.service.DbServiceClientImpl;
 
 import static ru.otus.demo.DbServiceDemo.HIBERNATE_CFG_FILE;
 
@@ -24,6 +23,7 @@ public abstract class AbstractHibernateTest {
     protected TransactionManagerHibernate transactionManager;
     protected DataTemplateHibernate<Client> clientTemplate;
     protected DBServiceClient dbServiceClient;
+    protected MyCache<String,Client> clientCache;
 
     private static TestContainersConfig.CustomPostgreSQLContainer CONTAINER;
 
@@ -55,14 +55,9 @@ public abstract class AbstractHibernateTest {
         Class<?>[] entityClasses = {Client.class, Address.class, Phone.class};
 
         sessionFactory = HibernateUtils.buildSessionFactory(configuration, entityClasses);
-
+        clientCache = new MyCache<>();
         transactionManager = new TransactionManagerHibernate(sessionFactory);
         clientTemplate = new DataTemplateHibernate<>(Client.class);
-        dbServiceClient = new DbServiceClientImpl(transactionManager, clientTemplate);
-    }
-
-    protected EntityStatistics getUsageStatistics() {
-        Statistics stats = sessionFactory.getStatistics();
-        return stats.getEntityStatistics(Client.class.getName());
+        dbServiceClient = new DbServiceClientWithCacheImpl(transactionManager, clientTemplate, clientCache);
     }
 }
