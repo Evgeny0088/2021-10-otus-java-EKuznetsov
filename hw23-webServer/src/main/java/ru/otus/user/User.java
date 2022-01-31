@@ -1,17 +1,19 @@
-package ru.otus.Admin;
+package ru.otus.user;
 
-public class Admin {
+public class User {
 
     private final long id;
     private final String name;
     private final String login;
     private final String password;
+    private boolean isAdmin;
 
-    public Admin(long id, String name, String login, String password) {
+    public User(long id, String name, String login, String password, boolean isAdmin) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.password = password;
+        this.isAdmin = isAdmin;
     }
 
     public long getId() {
@@ -28,6 +30,15 @@ public class Admin {
 
     public String getPassword() {
         return password;
+    }
+
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
 }

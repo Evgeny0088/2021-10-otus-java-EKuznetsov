@@ -2,8 +2,8 @@ package ru.otus;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import ru.otus.Admin.AdminDao;
-import ru.otus.Admin.InMemoryAdminDao;
+import ru.otus.user.UserDao;
+import ru.otus.user.InMemoryUserDao;
 import ru.otus.dataBasePackage.hibernateSetup.config.HibernateSetup;
 import ru.otus.dataBasePackage.service.DbServiceClientImpl;
 import ru.otus.server.UsersWebServer;
@@ -18,12 +18,12 @@ public class WebServerWithFilterBasedSecurityDemo {
     private static final String TEMPLATES_DIR ="/templates/";
 
     public static void main(String[] args) throws Exception {
-        AdminDao admins = new InMemoryAdminDao();
+        UserDao users = new InMemoryUserDao();
         DbServiceClientImpl dbServiceClient = HibernateSetup.createDbServiceClient();
         Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
                                         .serializeNulls().setPrettyPrinting().create();
         TemplateProcessor templateProcessor = new TemplateProcessorImpl(TEMPLATES_DIR);
-        UserAuthService authService = new UserAuthServiceImpl(admins);
+        UserAuthService authService = new UserAuthServiceImpl(users);
 
         UsersWebServer usersWebServer = new UsersWebServerWithFilterBasedSecurity(WEB_SERVER_PORT,
                 authService, gson, dbServiceClient, templateProcessor);
