@@ -1,0 +1,59 @@
+<#import "createClientMacro.html" as client>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Пользователи</title>
+    <script>
+        function getUserById() {
+            const userIdTextBox = document.getElementById('userIdTextBox');
+            const userDataContainer = document.getElementById('userDataContainer');
+            const id = userIdTextBox.value;
+            fetch('api/user/' + id)
+                .then(response => response.json())
+                .then(client => userDataContainer.innerHTML = JSON.stringify(client));
+        }
+    </script>
+</head>
+    <body>
+        <h4>Получить пользователя по id</h4>
+            <input type="text" id = "userIdTextBox" value="" placeholder="Введите id пользователя">
+            <button onclick="getUserById()">Получить</button>
+            <pre id = "userDataContainer"></pre>
+
+        <h4>Список пользователей</h4>
+
+        <#if clients?has_content>
+            <table style="width: 500px">
+                <thead>
+                <tr>
+                    <td style="width: 50px">Id</td>
+                    <td style="width: 150px">Имя</td>
+                    <td style="width: 150px">Адрес</td>
+                    <td style="width: 150px">Телефон</td>
+                    <td style="width: 150px"></td>
+                </tr>
+                </thead>
+                <tbody>
+                <#list clients as client>
+                    <tr>
+                        <td>${client.id}</td>
+                        <td>${client.name}</td>
+                        <td><#if client.clientAddress??>${client.clientAddress.street}<#else>не указан</#if></td>
+                        <#if client.clientPhones?has_content>
+                            <#list client.clientPhones as phone>
+                                <td>${phone.number}</td>
+                            </#list>
+                        <#else><td>не указан</td>
+                        </#if>
+                        <td><a href="/users?id=${client.id}">удалить</a></td>
+                </#list>
+                </tbody>
+            </table>
+            <#else> <em>${message}</em>
+            </#if>
+        <br>
+        <@client.create "создать"/>
+    </body>
+</html>

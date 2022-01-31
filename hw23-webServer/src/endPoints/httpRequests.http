@@ -1,0 +1,17 @@
+# Стартовая страница регистрации
+GET http://localhost:8080
+Accept: */*
+Content-Type: text/html
+Cache-Control: no-cache
+
+### Страница пользователей
+GET http://localhost:8080/users
+Accept: */*
+Content-Type: text/html, text/json
+Cache-Control: no-cache
+
+### REST сервис
+GET http://localhost:8080/api/user/3
+Accept: */*
+Content-Type: application/json
+Cache-Control: no-cache
