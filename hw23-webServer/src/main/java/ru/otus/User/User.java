@@ -1,4 +1,4 @@
-package ru.otus.user;
+package ru.otus.User;
 
 public class User {
 

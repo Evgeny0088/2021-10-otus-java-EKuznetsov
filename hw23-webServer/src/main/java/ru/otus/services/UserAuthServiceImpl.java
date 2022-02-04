@@ -1,6 +1,6 @@
 package ru.otus.services;
 
-import ru.otus.user.UserDao;
+import ru.otus.User.UserDao;
 
 public class UserAuthServiceImpl implements UserAuthService {
 

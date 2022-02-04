@@ -2,8 +2,8 @@ package ru.otus;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import ru.otus.user.UserDao;
-import ru.otus.user.InMemoryUserDao;
+import ru.otus.User.UserDao;
+import ru.otus.User.InMemoryUserDao;
 import ru.otus.dataBasePackage.hibernateSetup.config.HibernateSetup;
 import ru.otus.dataBasePackage.service.DbServiceClientImpl;
 import ru.otus.server.UsersWebServer;
