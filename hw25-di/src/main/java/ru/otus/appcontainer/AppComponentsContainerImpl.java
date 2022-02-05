@@ -3,9 +3,9 @@ package ru.otus.appcontainer;
 import ru.otus.appcontainer.api.AppComponent;
 import ru.otus.appcontainer.api.AppComponentsContainer;
 import ru.otus.appcontainer.api.AppComponentsContainerConfig;
+import ru.otus.config.AppConfig;
 import ru.otus.config.BeanNotFoundException;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -15,17 +15,14 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
     private final List<Method> validAppConfigMethods = new ArrayList<>();
     private final Map<String, Method> validAppConfigMethodsByName = new HashMap<>();
     private final Map<String, Object> createdBeans = new HashMap<>();
-    private Object appConfigInstance;
+    private final Object appConfigInstance = AppConfig.class.getConstructor().newInstance();
 
     public AppComponentsContainerImpl(Class<?> initialConfigClass) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         processConfig(initialConfigClass);
-
     }
 
-    private void processConfig(Class<?> initialConfigClass) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+    private void processConfig(Class<?> initialConfigClass){
         setAppContext(initialConfigClass);
-        Constructor<?> constructor = initialConfigClass.getConstructor();
-        appConfigInstance = constructor.newInstance();
     }
 
     private void setAppContext(Class<?> initialConfigClass) {
