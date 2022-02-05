@@ -12,19 +12,20 @@ import java.util.*;
 
 public class AppComponentsContainerImpl implements AppComponentsContainer {
 
-    private static final List<Method> validAppConfigMethods = new ArrayList<>();
-    private static final Map<String, Method> validAppConfigMethodsByName = new HashMap<>();
-    private static final Map<String, Object> createdBeans = new HashMap<>();
+    private final List<Method> validAppConfigMethods = new ArrayList<>();
+    private final Map<String, Method> validAppConfigMethodsByName = new HashMap<>();
+    private final Map<String, Object> createdBeans = new HashMap<>();
     private Object appConfigInstance;
 
     public AppComponentsContainerImpl(Class<?> initialConfigClass) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         processConfig(initialConfigClass);
+
     }
 
     private void processConfig(Class<?> initialConfigClass) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        setAppContext(initialConfigClass);
         Constructor<?> constructor = initialConfigClass.getConstructor();
         appConfigInstance = constructor.newInstance();
-        setAppContext(initialConfigClass);
     }
 
     private void setAppContext(Class<?> initialConfigClass) {
@@ -36,7 +37,7 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
 
     @Override
     public <C> C getAppComponent(Class<C> componentClass) throws InvocationTargetException, IllegalAccessException {
-        Method existedBeanMethod = componentClass.getInterfaces().length == 0 ?
+        Method validMethod = componentClass.getInterfaces().length == 0 ?
                 validAppConfigMethods.stream().filter(method->componentClass.getSimpleName().equals(method.getReturnType().getSimpleName()))
                         .findFirst()
                         .orElseThrow(()->new BeanNotFoundException(String.format("Not possible to create bean from provided class: <%s>, check return types in AppConfig class",
@@ -47,16 +48,20 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
                 .orElseThrow(()->new BeanNotFoundException(String.format("No suitable interface found at <%s> class for bean creation",
                         componentClass.getSimpleName()),new RuntimeException()));
 
-        List<Object> validArgsForInvocation = validArgsForInvocation(existedBeanMethod);
-        return (C) existedBeanMethod.invoke(appConfigInstance,validArgsForInvocation.toArray());
+        List<Object> validArgsForInvocation = validArgsForInvocation(validMethod);
+        C bean = (C) validMethod.invoke(appConfigInstance,validArgsForInvocation.toArray());
+        createdBeans.put(validMethod.getReturnType().getSimpleName(),bean);
+        return bean;
     }
 
     @Override
     public <C> C getAppComponent(String componentName) throws InvocationTargetException, IllegalAccessException {
-        Method existedBeanMethod = validAppConfigMethodsByName.get(componentName);
-        if (existedBeanMethod != null){
-            List<Object> validArgsForInvocation = validArgsForInvocation(existedBeanMethod);
-            return (C) existedBeanMethod.invoke(appConfigInstance,validArgsForInvocation.toArray());
+        Method validMethod = validAppConfigMethodsByName.get(componentName);
+        if (validMethod != null){
+            List<Object> validArgsForInvocation = validArgsForInvocation(validMethod);
+            C bean = (C) validMethod.invoke(appConfigInstance,validArgsForInvocation.toArray());
+            createdBeans.put(validMethod.getReturnType().getSimpleName(),bean);
+            return bean;
         }else {
             throw new BeanNotFoundException(String.format("Bean with name <%s> not found!",componentName),new RuntimeException());
         }
@@ -74,9 +79,9 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
     private void collectMetaData(Method method){
         AppComponent annotation = method.getAnnotation(AppComponent.class);
         String classNameInAnnotation = annotation.name();
-        AppComponentsContainerImpl.validAppConfigMethodsByName.put(classNameInAnnotation.isBlank()
+        this.validAppConfigMethodsByName.put(classNameInAnnotation.isBlank()
                 ? method.getReturnType().getSimpleName() : classNameInAnnotation,method);
-        AppComponentsContainerImpl.validAppConfigMethods.add(method);
+        this.validAppConfigMethods.add(method);
     }
 
     /*
@@ -85,7 +90,7 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
     private List<Object> validArgsForInvocation(Method argumentCandidate) throws InvocationTargetException, IllegalAccessException {
         Class<?>[] args = argumentCandidate.getParameterTypes();
         List<Object> argsForPreviousMethod = new ArrayList<>();
-        if (args.length == 0) return argsForPreviousMethod;
+        if (args.length == 0)return argsForPreviousMethod;
         int position = 0;
         while (position<args.length){
             int finalPosition = position; int finalPosition1 = position;
