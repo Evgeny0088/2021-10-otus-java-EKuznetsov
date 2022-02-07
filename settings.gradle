@@ -13,4 +13,4 @@ include 'hw21-jpql:homework-template'
 include 'hw22-cache:homework_replica_from_hw21-jpql'
 include 'hw22-cache:CacheHW'
 include 'hw23-webServer'
-
+include 'hw25-di'
