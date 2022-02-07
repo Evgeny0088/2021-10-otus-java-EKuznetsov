@@ -34,17 +34,7 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
 
     @Override
     public <C> C getAppComponent(Class<C> componentClass) throws InvocationTargetException, IllegalAccessException {
-        Method validMethod = componentClass.getInterfaces().length == 0 ?
-                validAppConfigMethods.stream().filter(method->componentClass.getSimpleName().equals(method.getReturnType().getSimpleName()))
-                        .findFirst()
-                        .orElseThrow(()->new BeanNotFoundException(String.format("Not possible to create bean from provided class: <%s>, check return types in AppConfig class",
-                                componentClass.getSimpleName()),new RuntimeException()))
-                : validAppConfigMethods.stream().filter(method-> Arrays.stream(componentClass.getInterfaces()).anyMatch(
-                        interFace->interFace.getSimpleName().equals(method.getReturnType().getSimpleName())))
-                .findFirst()
-                .orElseThrow(()->new BeanNotFoundException(String.format("No suitable interface found at <%s> class for bean creation",
-                        componentClass.getSimpleName()),new RuntimeException()));
-
+        Method validMethod = getValidMethodForBeanCreation(componentClass);
         List<Object> validArgsForInvocation = validArgsForInvocation(validMethod);
         C bean = (C) validMethod.invoke(appConfigInstance,validArgsForInvocation.toArray());
         createdBeans.put(validMethod.getReturnType().getSimpleName(),bean);
@@ -70,9 +60,7 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
     ###############################################################################################################
      */
 
-    /*
-    collecting main information (annotated methods and Annotation,s name into context)
-     */
+
     private void collectMetaData(Method method){
         AppComponent annotation = method.getAnnotation(AppComponent.class);
         String classNameInAnnotation = annotation.name();
@@ -82,15 +70,45 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
     }
 
     /*
+    try to get method with valid returned type equal to input class or interface:
+    there are two ways:
+        1. if input class has interfaces then we should check them if any method in appConfig class has the same returning type
+           if no method is found throw exception and bean cannot be created from input class
+        2. if class is interface then go directly checking it, if failed to find method - throw new exception
+    */
+    private Method getValidMethodForBeanCreation(Class<?> componentClass){
+        if (componentClass.getInterfaces().length == 0){
+            for (Method method: validAppConfigMethods){
+                if (method.getReturnType().getSimpleName().equals(componentClass.getSimpleName())){
+                    return method;
+                }
+            }
+            throw new BeanNotFoundException(String.format("Not possible to create bean from provided class: <%s>, check return types in AppConfig class",
+                    componentClass.getSimpleName()),new RuntimeException());
+        }else {
+            for (Method method: validAppConfigMethods){
+                for (Class<?> interFace: componentClass.getInterfaces()){
+                    if (interFace.getSimpleName().equals(method.getReturnType().getSimpleName())){
+                        return method;
+                    }
+                }
+            }
+            throw new BeanNotFoundException(String.format("No suitable interface found at <%s> class for bean creation",
+                    componentClass.getSimpleName()),new RuntimeException());
+        }
+    }
+
+    /*
     recursive method for collecting valid arguments before new bean
-     */
+    */
     private List<Object> validArgsForInvocation(Method argumentCandidate) throws InvocationTargetException, IllegalAccessException {
         Class<?>[] args = argumentCandidate.getParameterTypes();
         List<Object> argsForPreviousMethod = new ArrayList<>();
         if (args.length == 0)return argsForPreviousMethod;
         int position = 0;
         while (position<args.length){
-            int finalPosition = position; int finalPosition1 = position;
+            int finalPosition = position;
+            int finalPosition1 = position;
             Method validMethod = validAppConfigMethods.stream().filter(method->method.getReturnType().getSimpleName().equals(args[finalPosition].getSimpleName())).findFirst()
                     .orElseThrow(()->new BeanNotFoundException(String.format("Bean with name <%s> not found!", args[finalPosition1].getSimpleName()),new RuntimeException()));
             String beanInterFaceName = validMethod.getReturnType().getSimpleName();
