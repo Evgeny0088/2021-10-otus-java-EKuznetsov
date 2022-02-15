@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ru.otus.dataprocessor.ProcessorTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-12-28T14:34:01" hostname="Vostro-5490" time="0.161">
+<testsuite name="ru.otus.dataprocessor.ProcessorTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-02-14T17:35:43" hostname="Vostro-5490" time="0.139">
   <properties/>
-  <testcase name="Из файла читается json, обрабатывается, результат сериализуется в строку" classname="ru.otus.dataprocessor.ProcessorTest" time="0.161"/>
-  <system-out><![CDATA[/tmp/junit17056820386446266359
+  <testcase name="Из файла читается json, обрабатывается, результат сериализуется в строку" classname="ru.otus.dataprocessor.ProcessorTest" time="0.139"/>
+  <system-out><![CDATA[/tmp/junit14582149417911986388
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

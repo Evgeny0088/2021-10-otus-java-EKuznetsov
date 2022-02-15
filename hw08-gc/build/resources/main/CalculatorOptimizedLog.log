@@ -26,3 +26,6 @@ spend msec:2004, sec:2
 2021-11-13 Time: 10:42:46
 Results for 150m heap memory of CalcDemoOptimized class:
 spend msec:2019, sec:2
+2022-01-18 Time: 14:14:57
+Results for 150m heap memory of CalcDemoOptimized class:
+spend msec:2294, sec:2
