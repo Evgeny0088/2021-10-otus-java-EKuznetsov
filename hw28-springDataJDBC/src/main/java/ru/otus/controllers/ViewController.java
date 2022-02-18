@@ -63,12 +63,12 @@ public class ViewController {
     @GetMapping("/edit/{client_id}")
     public String editClient(@PathVariable("client_id") Long id,
                              HttpServletRequest request, Model model){
-        Optional<Client> client = clientService.getClient(id);
-        String name = client.isPresent() ? client.get().getName() : "";
-        String address = client.isPresent() ? client.get().getAddress().getStreet() : "";
+        Client client = clientService.getClient(id).orElse(null);
+        String name = client != null ? client.getName() : "";
+        String address = client != null ? client.getAddress().getStreet() : "";
         String phone = "";
-        if (client.isPresent() && !client.get().getClientPhones().isEmpty()){
-            phone = client.get().getClientPhones().iterator().next().getNumber();
+        if (client != null && !client.getClientPhones().isEmpty()){
+            phone = client.getClientPhones().iterator().next().getNumber();
         }
         model.addAttribute("name",name);
         model.addAttribute("address",address);
