@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Пользователи</title>
+</head>
+    <body>
+    <div class="form-row">
+        <div class="col-md-6">
+            <form method="get">
+                <input type="text" th:name="client_id" th:value="${client_id} ?: ''" placeholder="поиск по id"/>
+                <button type="submit" class="btn btn-primary ml-2">Поиск</button>
+            </form>
+        </div>
+    </div>
+
+        <h4>Список пользователей</h4>
+
+    <div class="col-sm-8" style="color: #1bdc14"><em th:text="${client_status} ?: ''"></em></div>
+
+        <div th:if="${!clients.isEmpty()}">
+            <table style="width: 660px">
+                <thead>
+                <tr>
+                    <td style="width: 50px">Id</td>
+                    <td style="width: 150px">Имя</td>
+                    <td style="width: 150px">Адрес</td>
+                    <td style="width: 150px">Телефон</td>
+                    <td style="width: 80px"></td>
+                    <td style="width: 80px"></td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="client : ${clients}">
+                    <td th:text="${client.id}"></td>
+                    <td th:text="${client.name}"></td>
+                    <td th:text="${client.clientAddress_id} ? ${client.address.street} : 'не указан'"></td>
+                    <div th:if="${!client.clientPhones.isEmpty()}">
+                        <div th:each="phone: ${client.clientPhones}">
+                            <td th:text="${phone.number}"></td>
+                        </div>
+                    </div>
+                    <div th:if="${client.clientPhones.isEmpty()}">
+                        <td>не указан</td>
+                    </div>
+                    <td><a th:href="@{'/hw-springJDBC/homepage/delete/' + ${client.id}}">удалить</a></td>
+                    <td><a th:href="@{'/hw-springJDBC/homepage/edit/' + ${client.id}}">обновить</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:if="${clients.isEmpty()}"><em th:text="${message}"></em></div>
+        <br>
+        <h4>Создать нового клиента:</h4>
+        <div th:insert="createClientMacro.html :: createClient(button='создать')"></div>
+    </body>
+</html>

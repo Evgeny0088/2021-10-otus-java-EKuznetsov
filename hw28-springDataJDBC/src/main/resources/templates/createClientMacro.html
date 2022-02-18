@@ -1,0 +1,20 @@
+<div th:fragment="createClient(button)">
+    <div class="col-sm-8" style="color: crimson">
+        <em th:if="${error_client != null}" th:text="${error_client}"></em>
+    </div>
+    <form method="post">
+        <label>name<br/>
+            <input type="text" name="name" th:value="${name} ?: ''" placeholder="name"/>
+        </label>
+        <br/>
+        <label>address<br/>
+            <input type="text" name="address" th:value="${address} ?: ''" placeholder="address"/>
+        </label>
+        <br/>
+        <label>phone<br/>
+            <input type="text" name="phone" th:value="${phone} ?: ''" placeholder="phone"/>
+        </label>
+        <br/>
+        <input type="submit" th:value="${button}"/>
+    </form>
+</div>не указан

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ru.otus.homework.HistoryListenerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-12-13T14:55:28" hostname="Vostro-5490" time="0.046">
+<testsuite name="ru.otus.homework.HistoryListenerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-02-14T17:35:42" hostname="Vostro-5490" time="0.043">
   <properties/>
-  <testcase name="listenerTest()" classname="ru.otus.homework.HistoryListenerTest" time="0.046"/>
+  <testcase name="listenerTest()" classname="ru.otus.homework.HistoryListenerTest" time="0.043"/>
   <system-out><![CDATA[message successfully added!
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
