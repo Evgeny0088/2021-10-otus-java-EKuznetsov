@@ -1,7 +1,6 @@
 package ru.otus;
 
 public class NumberStreams {
-
     private static final int STREAM_LIMIT = 10;
     private volatile int forwardIndex = 1;
     private volatile int backwardIndex = STREAM_LIMIT-1;
