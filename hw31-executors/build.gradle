@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow'
+}
+
+group 'ru.otus'
+version 'unspecified'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    implementation ("ch.qos.logback:logback-classic:1.2.10")
+    implementation ('org.jboss.logging:jboss-logging:3.4.2.Final')
+}
+
+task shadowNumberStreams(type: Jar, dependsOn: shadowJar) {
+    archiveBaseName.set('hw31-executors')
+    archiveVersion.set('0.1')
+    manifest {
+        attributes 'Main-Class': 'ru.otus.NumberStreams'
+    }
+    from zipTree(shadowJar.archiveFile)
+}
+
+tasks.build.dependsOn tasks.shadowNumberStreams
