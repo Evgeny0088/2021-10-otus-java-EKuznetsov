@@ -16,4 +16,3 @@ include 'hw23-webServer'
 include 'hw25-di'
 include 'hw28-springDataJDBC'
 include 'hw31-executors'
-
