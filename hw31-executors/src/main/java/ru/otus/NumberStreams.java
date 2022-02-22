@@ -7,7 +7,7 @@ public class NumberStreams {
     private volatile int printRepeatForward = 0;
     private volatile int printRepeatBackward = 0;
 
-    public static void main(String[] args) {
+    public static void main(String[] args){
         NumberStreams h = new NumberStreams();
         for (int i = 1; i<3; i++){
             new Thread(h::action,"Северный поток " + i).start();
@@ -18,10 +18,10 @@ public class NumberStreams {
         try {
             while (!Thread.currentThread().isInterrupted()){
                 while (forwardIndex<=STREAM_LIMIT){
-                    while (printRepeatForward++<2 && forwardIndex<=STREAM_LIMIT){
+                    while (printRepeatForward<2 && forwardIndex<=STREAM_LIMIT){
                         System.out.println(Thread.currentThread().getName() + " : " + forwardIndex);
                         sleep();
-                        if (printRepeatForward>1){
+                        while (printRepeatForward++ == 1 ){
                             notifyAll();
                         }
                         wait();
@@ -34,10 +34,10 @@ public class NumberStreams {
                 backwardIndex = STREAM_LIMIT -1;
 
                 while (backwardIndex>0){
-                    while (printRepeatBackward++<2 && backwardIndex>0){
+                    while (printRepeatBackward<2 && backwardIndex>0){
                         System.out.println(Thread.currentThread().getName() + " : " + (backwardIndex));
                         sleep();
-                        if (printRepeatBackward>1){
+                        while (printRepeatBackward++ == 1){
                             notifyAll();
                         }
                         wait();
