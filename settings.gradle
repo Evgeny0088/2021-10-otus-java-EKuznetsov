@@ -17,4 +17,3 @@ include 'hw25-di'
 include 'hw28-springDataJDBC'
 include 'hw31-executors'
 include 'hw32-concurrentCollections'
-
