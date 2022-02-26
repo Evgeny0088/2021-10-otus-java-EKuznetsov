@@ -7,47 +7,50 @@ public class NumberStreams {
     private volatile int backwardIndex = STREAM_LIMIT-1;
     private volatile int printRepeatForward = 0;
     private volatile int printRepeatBackward = 0;
+    boolean switchThread = true;
 
     public static void main(String[] args){
         NumberStreams h = new NumberStreams();
-        for (int i = 1; i<3; i++){
-            new Thread(h::action,"Северный поток " + i).start();
-        }
+        new Thread(()-> h.action(false),"Северный поток 1").start();
+        new Thread(()-> h.action(true),"Северный поток 2").start();
     }
 
-    private synchronized void action(){
+    synchronized void action(boolean switchThread){
         try {
             while (!Thread.currentThread().isInterrupted()){
                 while (forwardIndex<=STREAM_LIMIT){
-                    while (printRepeatForward<2 && forwardIndex<=STREAM_LIMIT){
+                    while (printRepeatForward++<2 && forwardIndex<=STREAM_LIMIT){
+                        while (this.switchThread == switchThread){
+                            notifyAll();
+                            this.switchThread = !switchThread;
+                        }
                         System.out.println(Thread.currentThread().getName() + " : " + forwardIndex);
                         sleep();
-                        while (printRepeatForward++ == 1 ){
-                            notifyAll();
+                        while (this.switchThread == !switchThread){
+                            wait();
                         }
-                        wait();
                     }
                     forwardIndex++;
                     printRepeatForward = 0;
-                    notifyAll();
                 }
 
                 backwardIndex = STREAM_LIMIT -1;
 
                 while (backwardIndex>0){
-                    while (printRepeatBackward<2 && backwardIndex>0){
+                    while (printRepeatBackward++<2 && backwardIndex>0){
+                        while (this.switchThread == switchThread){
+                            notifyAll();
+                            this.switchThread = !switchThread;
+                        }
                         System.out.println(Thread.currentThread().getName() + " : " + (backwardIndex));
                         sleep();
-                        while (printRepeatBackward++ == 1){
-                            notifyAll();
+                        while (this.switchThread == !switchThread){
+                            wait();
                         }
-                        wait();
                     }
                     backwardIndex--;
                     printRepeatBackward = 0;
-                    notifyAll();
                 }
-
                 forwardIndex = 2;
             }
         } catch (InterruptedException ex) {
