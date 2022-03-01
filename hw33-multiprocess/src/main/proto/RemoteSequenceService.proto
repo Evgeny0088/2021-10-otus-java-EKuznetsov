@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package ru.otus.protobuf.generated;
+
+option java_multiple_files = true;
+
+message SequenceOrderRequest {
+    int32 first = 1;
+    int32 last = 2;
+}
+
+message SequenceGenerationResponse {
+    int32 begin = 1;
+}
+
+message CallToShutDownServerFromClient {
+    string shutDownRequest = 1;
+}
+
+message ServerShutDownResponse{}
+
+service NumberOrderService {
+    rpc getSequence(SequenceOrderRequest) returns (stream SequenceGenerationResponse);
+}
