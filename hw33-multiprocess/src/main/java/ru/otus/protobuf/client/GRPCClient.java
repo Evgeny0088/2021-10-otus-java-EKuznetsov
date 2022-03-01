@@ -28,4 +28,5 @@ public class GRPCClient {
     private static SequenceOrderRequest createRequestForSequence(){
         return SequenceOrderRequest.newBuilder().setFirst(0).setLast(30).build();
     }
+
 }

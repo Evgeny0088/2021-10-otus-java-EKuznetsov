@@ -24,7 +24,6 @@ public class GRPCServer {
         }));
 
         log.info("server waiting for client connections...");
-
         server.awaitTermination();
     }
 }
