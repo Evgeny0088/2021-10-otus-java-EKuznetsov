@@ -14,7 +14,7 @@ public class NumberOrderServiceImpl extends NumberOrderServiceGrpc.NumberOrderSe
 
     private static final Logger log = LoggerFactory.getLogger(NumberOrderServiceImpl.class);
 
-    private final ScheduledExecutorService executor = Executors.newScheduledThreadPool(3);
+    private final ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
     private static final long ITERATION_INTERVAL = 2L;
 
     @Override
